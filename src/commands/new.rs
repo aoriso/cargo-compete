@@ -76,6 +76,7 @@ pub fn run(opt: OptCompeteNew, ctx: crate::Context<'_>) -> anyhow::Result<()> {
             ..
         } => {
             let contest = contest.with_context(|| "`contest` is required for AtCoder")?;
+            let is_abc = contest.starts_with("abc");
             let problems = problems.map(|ps| ps.into_iter().collect());
 
             let mut outcome = crate::web::retrieve_testcases::dl_from_atcoder(
@@ -84,9 +85,11 @@ pub fn run(opt: OptCompeteNew, ctx: crate::Context<'_>) -> anyhow::Result<()> {
                 &cookies_path,
                 shell,
             )?;
-            for i in 0..outcome.len() {
-                if outcome[i].index == "Ex" {
-                    outcome[i].index = "H".to_string();
+            if is_abc {
+                for i in 0..outcome.len() {
+                    if outcome[i].index == "Ex" {
+                        outcome[i].index = "H".to_string();
+                    }
                 }
             }
             //dbg!(&outcome);
