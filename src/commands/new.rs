@@ -78,13 +78,19 @@ pub fn run(opt: OptCompeteNew, ctx: crate::Context<'_>) -> anyhow::Result<()> {
             let contest = contest.with_context(|| "`contest` is required for AtCoder")?;
             let problems = problems.map(|ps| ps.into_iter().collect());
 
-            let outcome = crate::web::retrieve_testcases::dl_from_atcoder(
+            let mut outcome = crate::web::retrieve_testcases::dl_from_atcoder(
                 ProblemsInContest::Indexes { contest, problems },
                 full,
                 &cookies_path,
                 shell,
             )?;
-
+            for i in 0..outcome.len() {
+                if outcome[i].index == "Ex" {
+                    outcome[i].index = "H".to_string();
+                }
+            }
+            //dbg!(&outcome);
+            let outcome = outcome;
             let group = Group::Atcoder(crate::web::url::atcoder_contest(
                 outcome
                     .get(0)
