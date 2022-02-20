@@ -92,7 +92,6 @@ pub fn run(opt: OptCompeteNew, ctx: crate::Context<'_>) -> anyhow::Result<()> {
                     }
                 }
             }
-            //dbg!(&outcome);
             let outcome = outcome;
             let group = Group::Atcoder(crate::web::url::atcoder_contest(
                 outcome
