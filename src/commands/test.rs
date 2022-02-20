@@ -28,7 +28,7 @@ pub struct OptCompeteTest {
     pub testcases: Option<Vec<String>>,
 
     /// Display limit
-    #[structopt(long, value_name("SIZE"), default_value("4KiB"))]
+    #[structopt(long, value_name("SIZE"), default_value("64KiB"))]
     pub display_limit: Size,
 
     /// Existing package to retrieving test cases for
